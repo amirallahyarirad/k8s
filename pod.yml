@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns1
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: ns1
+  name: nginx
+  labels:
+    app: app2
+    zone: dev
+#    app.kubernetes.io/env: dev
+
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+            resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+        requests:
+          memory: "64Mi"
+          cpu: "200m"
+          
+    - name: os
+      image: ubuntu
+      command:
+        - /bin/bash
+        - -c
+        - while true; do echo hello-world; sleep 5; done
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+        requests:
+          memory: "64Mi"
+          cpu: "200m"
